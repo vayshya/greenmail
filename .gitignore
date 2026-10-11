@@ -238,3 +238,5 @@ test.log
 _site
 .vscode/
 .gemini/
+/greenmail-core/testLoadKeyStoreViaSystemProperty.pkcs12
+/greenmail-core/test-it.log

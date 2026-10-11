@@ -35,6 +35,7 @@ jobs:
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.runner == 'ubuntu' }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         java: [ '11', '17', '21', '25' ]
     name: Java ${{ matrix.Java }}
