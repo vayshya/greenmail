@@ -49,7 +49,7 @@ public class ImapSessionFolder implements MailFolder, FolderListener, UIDFolder 
         for (int i = 0; i < uids.length; i++) {
             long messageUid = uids[i];
             if (uid == messageUid) {
-                return i + 1;
+                return correctForExpungedMessages(i + 1);
             }
         }
         throw new FolderException("No such message with uid " + uid + " in folder " + folder.getName());
@@ -89,7 +89,8 @@ public class ImapSessionFolder implements MailFolder, FolderListener, UIDFolder 
             this.expungedMsns.clear();
 
             // TODO - renumber any cached ids (for now we assume the modifiedFlags has been cleared)\
-            if (!(modifiedFlags.isEmpty() && !sizeChanged)) {
+            // A pending size change holds no message number, so it does not have to be reported first.
+            if (!modifiedFlags.isEmpty()) {
                 throw new IllegalStateException("Need to do this properly...");
             }
             return expungedMsnsArray;
